@@ -37,14 +37,26 @@ public class AMapGeolocationModule extends ReactContextBaseJavaModule implements
         }
     }
 
+
+
+    @ReactMethod
+    public void updatePrivacy (){
+        AMapLocationClient.updatePrivacyShow(reactContext,true,true);
+        AMapLocationClient.updatePrivacyAgree(reactContext,true);
+    }
+
+
     @ReactMethod
     public void init(String key, Promise promise) {
         if (client != null) {
             client.onDestroy();
         }
-
         AMapLocationClient.setApiKey(key);
-        client = new AMapLocationClient(reactContext);
+        try {
+            client = new AMapLocationClient(reactContext);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         client.setLocationListener(this);
         eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
         promise.resolve(null);

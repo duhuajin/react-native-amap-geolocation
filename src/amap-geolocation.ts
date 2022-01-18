@@ -5,6 +5,15 @@ const AMapGeolocation = NativeModules.AMapGeolocation;
 const eventEmitter = new NativeEventEmitter(AMapGeolocation);
 
 /**
+ * 从定位5.6.0版本起对旧版本SDK不兼容，
+ * 请务必确保调用SDK任何接口前先调用更新隐私合规updatePrivacyShow、updatePrivacyAgree两个接口，
+ * 否则可能导致编译不通过等异常情况
+ * @returns
+ */
+export function updatePrivacy(): void {
+  return AMapGeolocation.updatePrivacy();
+}
+/**
  * 初始化 SDK
  *
  * @param key 高德开放平台应用 Key
